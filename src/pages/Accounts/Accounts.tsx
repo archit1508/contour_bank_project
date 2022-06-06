@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react'; 
-import {Link} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import AccountCard from '../../components/AccountCard/AccountCard'
+import ErrorComp from '../../components/ErrorComp/ErrorComp'
+import Spinner from '../../components/Spinner/Spinner'
+import {Container, Heading, Row} from './Styles'
 
 const Accounts = () => {
 
     const [loading, setLoading] = useState(false)
     const [accounts, setAccounts] = useState<any[]>([])
+    const [err,setErr] = useState(false)
 
     useEffect(()=>{
         fetch('./data/accounts.json', {
@@ -19,32 +23,53 @@ const Accounts = () => {
             setAccounts(accountsFetched)
             setLoading(true)
         })
+        .catch(err => {
+            console.log(err)
+            setErr(true)
+        })
     },[loading])
 
-    if(!loading){
+    if(!loading && !err){
         return (
-            <h1>accounts</h1>
+            <Spinner />
+        )
+    }
+    else if(!loading && err){
+        return(
+            <ErrorComp />
         )
     }
     else{
         return(
             <>
-                <h1>accounts loaded</h1>
-                {
-                    accounts.map(
-                        (account) => (
-                            <>
-                                <p>{account.account_name}</p>
-                                <Link to={`/accounts/${account.id}/transactions`}>{account.id}</Link>
-                            </>
-                        )
-                    )
-                }
+                <Container className="container-fluid">
+                    <Heading>List of Accounts</Heading>
+                    <Row className="row row-cols-1 row-cols-md-2 g-4">
+                        {
+                            accounts.map(
+                                (account) => (
+                                    <>
+                                        <AccountCard
+                                            accountId={account.id}
+                                            accountName={account.account_name}
+                                            accountType={account.account_type}
+                                            accountBalance={account.balance}
+                                            accountCurrency={account.currency}
+                                            accountNumber={account.account_number}
+                                            isActive={account.is_active}
+                                        />
+                                    </>
+                                )
+                            )
+                        }
+                    </Row>
+                </Container>
             </>
             
         )
     }
     
 }
+
 
 export default Accounts

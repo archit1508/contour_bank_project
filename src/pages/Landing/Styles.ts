@@ -5,7 +5,15 @@ export const Container = styled.div`
 export const Row = styled.div`
     height:100vh;
 `
-export const Col = styled.div``
+export const Col1 = styled.div`
+@media (max-width: 768px) {
+    text-align:center;
+  }`
+export const Col2 = styled.div`
+    @media (max-width: 768px) {
+    display:none;
+  }
+`
 
 export const Heading = styled.h1`
     font-size: 4em;

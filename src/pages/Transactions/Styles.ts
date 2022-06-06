@@ -12,3 +12,6 @@ export const Heading = styled.h1`
     margin: 15px auto;
 
 `
+export const BackButton = styled.p`
+    font-size:2em;
+`

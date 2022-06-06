@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import TransactionRow from '../../components/TransactionRow/TransactionRow'
 import Spinner from '../../components/Spinner/Spinner'
 import ErrorComp from '../../components/ErrorComp/ErrorComp'
-import {Container, Heading, Table, TableRow, TableHeader} from './Styles'
+import {Container, Heading, Table, TableRow, TableHeader, BackButton} from './Styles'
 
 const Transactions = () => {
 
@@ -47,6 +47,7 @@ const Transactions = () => {
     else{
         return(
             <>
+                <BackButton><Link to={`/accounts`}>&#8592;</Link></BackButton>
                 <Container className="table-responsive">
                     <Heading>Transaction Details for Account ID {params.accountId}</Heading>
                     <Table className="table">
